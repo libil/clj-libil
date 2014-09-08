@@ -1,4 +1,4 @@
-(defproject clj-libil "0.1.0"
+(defproject clj-libil "0.1.1"
   :description "Clojure port of Libil, Processor of Bahasa Walikan"
   :url "http://github.com/lynxluna/clj-libil"
   :license {:name "MIT License"

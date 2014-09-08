@@ -1,5 +1,6 @@
 (ns libil.core
-  (:use [clojure.string :only [split lower-case upper-case capitalize join]]))
+  (:use [clojure.string :only [split lower-case upper-case capitalize join]])
+  (:import [java.io Reader StringReader]))
 
 (def first-pair
   ["h" "n" "c" "r" "k" "d" "t" "s" "w" "l"])
@@ -13,15 +14,32 @@
 (defn- within? [coll item]
   ((complement nil?) (some (set [item]) coll)))
 
+(defn- rdr-peek
+  [^Reader rdr]
+  (.mark rdr 1)
+  (let [c (.read rdr)]
+    (.reset rdr)
+    c))
+
+(defn tokenize-rdr
+  "Tokenize a reader" 
+  [^Reader rdr]
+  (loop [tokens (transient [])
+         current (.read rdr)
+         ahead (rdr-peek rdr)]
+    (let [cc (-> current char str)]
+      (cond (== -1 ahead) (persistent! (conj! tokens cc))
+            (within? all-con (lower-case (str cc (char ahead))))
+              (let [pair (str (char current) (char ahead))]
+                (.skip rdr 1)
+                (if (== -1 (rdr-peek rdr)) (persistent! (conj! tokens pair))
+                    (recur (conj! tokens pair) (.read rdr) (rdr-peek rdr))))
+            :else (recur (conj! tokens cc) (.read rdr) (rdr-peek rdr))))))
+
 (defn tokenize-word
   "Tokenizing the word, to be able to be mapped"
   [^String w]
-  (loop [l [] rstr w]
-    (let [pair (apply str (take 2 rstr))
-          fstr (str (first rstr))]
-      (cond (empty? rstr) l
-            (within? all-con (lower-case pair)) (recur (conj l pair) (apply str (-> rstr rest rest)))
-            :else (recur (conj l fstr) (apply str (rest rstr)))))))
+  (tokenize-rdr (StringReader. w)))
 
 (defn- inv-cap 
   "Inverse Capitalize"

@@ -12,7 +12,7 @@ Unlike its Ruby Counterparts, `clj-libil` is only implemented as library.
 Just include this to fetch it from Clojars
 
 ```clojure
-[clj-libil "0.1.0"]
+[clj-libil "0.1.1"]
 ```
 
 ## Usage
@@ -37,6 +37,17 @@ There are 4 functions to convert word and sentences using `clj-libil`
 (convert-sentence-yk "Dagadu, Dab!") ;; Matamu, Mas!
 (convert-sentence-ngalam "Ngalup Ayabarus") ;; Pulang Surabaya
 ```
+
+## Release Notes
+
+### Version 0.1.1
+
+- Using `StringReader` to process token.
+- Using transient collection for optimisation.
+
+### Version 0.1.0
+
+- Initial Version
 
 ## License
 
