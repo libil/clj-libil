@@ -1,6 +1,6 @@
 # clj-libil
 
-[![Build Status](https://travis-ci.org/lynxluna/clj-libil.svg?branch=master)](https://travis-ci.org/lynxluna/clj-libil)
+[![Build Status](https://travis-ci.org/libil/clj-libil.svg?branch=master)](https://travis-ci.org/libil/clj-libil)
 
 [![Clojars Project](http://clojars.org/clj-libil/latest-version.svg)](http://clojars.org/clj-libil)
 
